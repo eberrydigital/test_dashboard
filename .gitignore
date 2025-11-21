@@ -36,3 +36,4 @@ coverage/
 # Security / Tokens
 .coveralls.yml
 /terraform/iam/.terraform/
+/terraform/provision/.terraform/
