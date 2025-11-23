@@ -54,6 +54,7 @@ module "s3" {
   source       = "./s3"
   service_name = var.service_name
   environment  = var.environment
+  aws_region   = var.aws_region
   tags         = local.tags
 }
 
