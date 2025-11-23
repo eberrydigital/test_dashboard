@@ -4,6 +4,7 @@ resource "aws_s3_bucket" "app_bucket" {
   tags          = var.tags
 }
 
+
 resource "aws_s3_bucket_public_access_block" "app_bucket_block" {
   bucket                  = aws_s3_bucket.app_bucket.id
   block_public_acls       = true
