@@ -70,6 +70,7 @@ module "cloudfront" {
 
   custom_domain = "test-dashboard.webinfra.eberry.digital"
   acm_cert_arn  = module.acm.acm_certificate_arn
+  bucket_name = module.s3.bucket_name
 }
 
 module "acm" {
