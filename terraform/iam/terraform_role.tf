@@ -43,13 +43,23 @@ data "aws_iam_policy_document" "terraform_policy_data" {
   }
 
   statement {
-    sid     = "Route53Changes"
+    sid = "Route53Read"
+    actions = [
+      "route53:GetHostedZone",
+      "route53:ListHostedZones",
+      "route53:ListResourceRecordSets",
+      "route53:ListQueryLoggingConfigs"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid = "Route53Change"
     actions = [
       "route53:ChangeResourceRecordSets"
     ]
-
     resources = [
-      "arn:aws:route53:::hostedzone/<YOUR_ZONE_ID>"
+      "arn:aws:route53:::hostedzone/Z3J9J9XOPIQJD0"
     ]
   }
 
