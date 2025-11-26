@@ -19,14 +19,55 @@ resource "aws_iam_role" "terraform_role" {
 
 data "aws_iam_policy_document" "terraform_policy_data" {
   statement {
+    sid     = "S3Full"
     actions = [
-      "s3:*",
-      "cloudfront:*",
+      "s3:*"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid     = "CloudFrontFull"
+    actions = [
+      "cloudfront:*"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid     = "ACMFull"
+    actions = [
+      "acm:*"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid     = "Route53Changes"
+    actions = [
+      "route53:ChangeResourceRecordSets"
     ]
 
     resources = [
-      "*"
+      "arn:aws:route53:::hostedzone/<YOUR_ZONE_ID>"
     ]
+  }
+
+  statement {
+    sid     = "Route53List"
+    actions = [
+      "route53:ListHostedZones",
+      "route53:ListResourceRecordSets"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid     = "IAMPassRole"
+    actions = [
+      "iam:PassRole"
+    ]
+    resources = ["*"]
   }
 }
 
@@ -37,7 +78,6 @@ resource "aws_iam_policy" "terraform_policy" {
   policy      = data.aws_iam_policy_document.terraform_policy_data.json
 }
 
-
 resource "aws_iam_role_policy_attachment" "terraform_policy_attachment" {
   role       = aws_iam_role.terraform_role.name
   policy_arn = aws_iam_policy.terraform_policy.arn
@@ -46,6 +86,7 @@ resource "aws_iam_role_policy_attachment" "terraform_policy_attachment" {
 output "terraform_role_arn" {
   value = aws_iam_role.terraform_role.arn
 }
+
 output "terraform_policy_arn" {
   value = aws_iam_policy.terraform_policy.arn
 }
