@@ -61,7 +61,7 @@ resource "aws_cloudfront_distribution" "frontend" {
 
 # S3 bucket policy: allow CloudFront to read
 resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = var.bucket_arn
+  bucket = var.bucket_name
 
   policy = jsonencode({
     Version = "2012-10-17",
