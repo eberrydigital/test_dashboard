@@ -65,7 +65,7 @@ module "cloudfront" {
   environment  = var.environment
   tags         = local.tags
 
-  bucket_domain = module.s3.bucket_name
+  bucket_domain = module.s3.bucket_domain_name
   bucket_arn    = module.s3.bucket_arn
 
   custom_domain = "test-dashboard.webinfra.eberry.digital"
