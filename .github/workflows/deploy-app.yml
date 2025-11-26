@@ -27,6 +27,9 @@ jobs:
 
       - name: Build Vite app
         run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_API_TOKEN: ${{ secrets.VITE_API_TOKEN }}
 
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
