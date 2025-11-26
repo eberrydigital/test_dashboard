@@ -48,7 +48,8 @@ data "aws_iam_policy_document" "terraform_policy_data" {
       "route53:GetHostedZone",
       "route53:ListHostedZones",
       "route53:ListResourceRecordSets",
-      "route53:ListQueryLoggingConfigs"
+      "route53:ListQueryLoggingConfigs",
+      "route53:GetChange"
     ]
     resources = ["*"]
   }
