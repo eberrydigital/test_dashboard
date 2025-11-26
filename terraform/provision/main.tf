@@ -58,9 +58,44 @@ module "s3" {
   tags         = local.tags
 }
 
+module "cloudfront" {
+  source = "./cloudfront"
+
+  service_name = var.service_name
+  environment  = var.environment
+  tags         = local.tags
+
+  bucket_domain = module.s3.bucket_name
+  bucket_arn    = module.s3.bucket_arn
+
+  custom_domain = "test-dashboard.webinfra.eberry.digital"
+  acm_cert_arn  = module.acm.acm_certificate_arn
+}
+
+module "acm" {
+  source        = "./acm"
+  domain_name   = "test-dashboard.webinfra.eberry.digital"
+  hosted_zone_id = "Z3J9J9XOPIQJD0"
+  tags          = local.tags
+}
+
+
 output "app_bucket_name" {
   value = module.s3.bucket_name
 }
 output "app_bucket_arn" {
   value = module.s3.bucket_arn
+}
+
+
+resource "aws_route53_record" "cdn_alias" {
+  zone_id = "Z3J9J9XOPIQJD0"
+  name    = "test-dashboard.webinfra.eberry.digital"
+  type    = "A"
+
+  alias {
+    name                   = module.cloudfront.cloudfront_domain
+    zone_id                = "Z2FDTNDATAQYW2"
+    evaluate_target_health = false
+  }
 }
