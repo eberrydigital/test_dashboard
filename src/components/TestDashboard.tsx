@@ -7,7 +7,7 @@ import { useTests } from "@/hooks/useTests";
 
 export const TestDashboard = () => {
   const [selectedTeam, setSelectedTeam] = useState<string | undefined>(undefined);
-  
+
   const { data: tests, isLoading, error } = useTests(
     selectedTeam ? { team: selectedTeam } : undefined
   );
@@ -27,9 +27,9 @@ export const TestDashboard = () => {
     const passed = tests.filter(t => t.successRatePercent === 100).length;
     const failed = tests.filter(t => t.successRatePercent === 0 && t.totalRuns > 0).length;
     const flaky = tests.filter(t => t.flakyFlag).length;
-    
+
     const totalWithRuns = tests.filter(t => t.totalRuns > 0);
-    const passRate = totalWithRuns.length > 0 
+    const passRate = totalWithRuns.length > 0
       ? (totalWithRuns.reduce((sum, t) => sum + t.successRate, 0) / totalWithRuns.length * 100).toFixed(1)
       : "0.0";
 
@@ -67,11 +67,13 @@ export const TestDashboard = () => {
               Monitor and analyze tests
             </p>
           </div>
-          <img
-            src="/logo_qa.png"
-            alt="QA Logo"
-            className="h-16 w-auto md:h-20 opacity-80 hover:opacity-100 transition-opacity select-none pointer-events-none"
-          />
+          <div className="flex items-start justify-between gap-6">
+            <span
+                className="text-2xl font-semibold tracking-wide text-foreground/80"
+                aria-label="Brand placeholder"
+            >QA Chapter
+            </span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
